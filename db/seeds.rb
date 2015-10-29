@@ -24,3 +24,17 @@ include RandomData
  puts "Seed finished"
  puts "#{Post.count} posts created"
  puts "#{Comment.count} comments created"
+ 
+ 1.times do
+     Post.find_or_create_by(
+         title: "Noelle",
+         body: "My sweet little angel baby"
+         )
+ end
+ 
+ 1.times do
+     Comment.find_or_create_by(
+         body: 'Von Miller Sack Dance'
+         
+         )
+     end
