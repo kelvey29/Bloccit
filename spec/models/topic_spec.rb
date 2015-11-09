@@ -3,9 +3,12 @@ include RandomData
 
 RSpec.describe Topic, type: :model do
     
-    let(:topic) { Topic.create!(name: RandomData.random_sentence, description: RandomData.random_paragraph) }
+    let(:topic) { sponsored_post.topics.create!(name: RandomData.random_sentence, description: RandomData.random_paragraph) }
+    
+    let(:sponsored_post) { SponsoredPost.create!(title: RandomData.random_sentence, body: RandomData.random_paragraph, price: 32) }
     
     it { should have_many(:posts) }
+    it { should belong_to(:sponsored_post) }
     
     describe "attributes" do
        it "should respond to name" do

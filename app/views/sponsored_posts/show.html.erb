@@ -1,0 +1,28 @@
+<h1><%= @sponsored_post.title %></h1>
+ 
+ <%= link_to "Edit Sponsored Post", edit_sponsored_post_path, class: 'btn btn-success' %>
+ <%= link_to "Delete Sponsored Post", @sponsored_post, method: :delete class: 'btn btn-danger' data: { confirm: 'Are you sure?' } %>
+ <div class="row">
+   <div class="col-md-8">
+     <p class="lead"><%= @sponsored_post.body %></p>
+ // #10
+     <% @sponsored_post.topics.each do |topic| %>
+       <div class="media">
+         <div class="media-body">
+           <h4 class="media-heading">
+             <%= link_to topic.title, sponsored_post_path(@sponsored_post, topic %>
+           </h4>
+           
+           <small>
+            submitted <%= time_ago_in_words(topic.created_at) %> ago <br>
+            <%= topic.count %> Topics
+           </small>
+         </div>
+       </div>
+     <% end %>
+   </div>
+   <div class="col-md-4">
+     <%= link_to "New Sponsored Post", new_sponsored_post_path(@sponsored_post), class: 'btn btn-success' %>
+     <%= link_to "Delete Sponsored Post", @sponsored_post, method: :delete,  class: 'btn btn-danger' %>
+   </div>
+ </div>
