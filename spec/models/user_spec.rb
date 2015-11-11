@@ -6,7 +6,7 @@ RSpec.describe User, type: :model do
   #validate name
   it { should validate_presence_of(:name) }
   it { should validate_length_of(:name).is_at_least(1) }
-  
+
   #validate email
   it { should validate_presence_of(:email) }
   it { should validate_uniqueness_of(:email) }
@@ -27,6 +27,12 @@ RSpec.describe User, type: :model do
      
      it "should respond to email" do
         expect(user).to respond_to(:email) 
+     end
+     
+     it "should format user name" do
+        user.name = "bloc user"
+        user.save
+        expect(user.name).to eq("Bloc User")
      end
   end
   
