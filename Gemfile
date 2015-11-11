@@ -31,3 +31,5 @@ source 'https://rubygems.org'
  gem 'turbolinks'
  # Twitter Bootstrap for Bloccit
  gem 'bootstrap-sass'
+ # Use for encrypting User passwords
+ gem 'bcrypt'
