@@ -16,6 +16,11 @@ class SessionsController < ApplicationController
        end
     end
     
+    def avatar_url(user)
+       gravatar_id = Digest::MDS::hexdigest(user.email).downcase
+       "http://gravatar.com/avatar/#{gravatar_id}.png?s=48"
+    end
+    
     def destroy
        destroy_session(current_user)
        flash[:notice] = "You've been signed out come back soon!"
