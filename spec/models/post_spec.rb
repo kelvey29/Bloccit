@@ -3,9 +3,9 @@ include RandomData
 
 RSpec.describe Post, type: :model do
   
-  let(:topic) { Topic.create!(name: RandomData.random_sentence, description: RandomData.random_paragraph) }
-  let(:user) { User.create!(name: "Bloccit User", email: "user@bloccit.com", password: "helloworld") }
-  let(:post) { topic.posts.create!(title: RandomData.random_sentence, body: RandomData.random_paragraph, user: user) }
+  let(:topic) { create(:topic) }
+  let(:user) { create(:user) }
+  let(:post) { create(:post) }
   
   it { should have_many(:labelings) }
   it { should have_many(:labels).through(:labelings) }
@@ -74,6 +74,8 @@ RSpec.describe Post, type: :model do
  
        it "updates the rank when a down vote is created" do
          old_rank = post.rank
+         puts "old rank is #{old_rank.inspect}"
+         puts post.inspect
          post.votes.create!(value: -1)
          expect(post.rank).to eq(old_rank - 1)
        end
