@@ -8,8 +8,8 @@ RSpec.describe CommentsController, type: :controller do
    let(:my_user) { create(:user) }
    let(:other_user) { create(:user) }
    let(:my_post) { create(:post, topic: my_topic, user: my_user) }
-   let(:my_comment) { Comment.create!(body: 'Comment Body', post: my_post, user: my_user) }
- 
+   let(:my_comment) { create(:comment, user: my_user, post: my_post) }
+
  # #6
    context "guest" do
      describe "POST create" do
@@ -46,6 +46,7 @@ RSpec.describe CommentsController, type: :controller do
  
      describe "DELETE destroy" do
        it "redirects the user to the posts show view" do
+           
          delete :destroy, post_id: my_post.id, id: my_comment.id
          expect(response).to redirect_to([my_topic, my_post])
        end
@@ -105,7 +106,7 @@ RSpec.describe CommentsController, type: :controller do
      describe "DELETE destroy" do
        it "deletes the comment" do
          delete :destroy, post_id: my_post.id, id: my_comment.id
-         count = Comment.where({id: my_comment.id}).count
+         count = Comment.where(id: my_comment.id).count
          expect(count).to eq 0
        end
  

@@ -6,7 +6,7 @@ include RandomData
     let(:topic) { create(:topic) }
     let(:user) { create(:user) }
     let(:post) { create(:post) }
-    let(:vote) { Vote.create!(value: 1, post: post, user: user) }
+    let(:vote) { create(:vote, user: user, post: post) }
  
  
     it { should belong_to(:post) }
@@ -23,7 +23,7 @@ include RandomData
        vote.save
      end
  
-     it "#update_post should call update_rank on post " do
+     it "#update_post should call update_rank on post" do
  
        expect(post).to receive(:update_rank).at_least(:once)
        vote.save
