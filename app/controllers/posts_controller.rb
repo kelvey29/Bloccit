@@ -2,9 +2,9 @@ class PostsController < ApplicationController
   
   before_action :require_sign_in, except: :show
   before_action :authorize_user, except: [:show, :new, :create]
+  before_action :load_post, except: [:new, :create]
   
   def show
-    @post = Post.find(params[:id])
   end
 
   def new
@@ -30,14 +30,10 @@ class PostsController < ApplicationController
   end
 
   def edit
-    @post = Post.find(params[:id])
   end
   
   def update
-     @post = Post.find(params[:id])
-     @post.assign_attributes(post_params)
- 
-     if @post.save
+     if @post.update_attributes(post_params)
        @post.labels = Label.update_labels(params[:post][:labels]) unless Rails.env.test?
        flash[:notice] = "Post was updated."
        redirect_to [@post.topic, @post]
@@ -48,12 +44,8 @@ class PostsController < ApplicationController
   end
    
   def destroy
-     @post = Post.find(params[:id])
- 
-
      if @post.destroy
-       flash[:notice] = "\"#{@post.title}\" was deleted successfully."
-       redirect_to @post.topic
+       redirect_to @post.topic, notice: "\"#{@post.title}\" was deleted successfully."
      else
        flash[:error] = "There was an error deleting the post."
        render :show
@@ -61,6 +53,10 @@ class PostsController < ApplicationController
   end
   
   private
+  
+  def load_post
+     @post = Post.find(params[:id])
+  end
   def post_params
     params.require(:post).permit(:title, :body)
   end
