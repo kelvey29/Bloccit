@@ -1,0 +1,18 @@
+class Api::V1::TopicsController < Api::V1::BaseController
+ # #22
+   before_filter :authenticate_user, except: [:index, :show]
+   before_filter :authorize_user, except: [:index, :show]
+ 
+   def index
+    #   @post = Post.find(params[:post_id])
+    #   comment = @post.comments.new( params.require(:comment).permit(:body) )
+       
+       posts = Post.all
+       render json: posts.to_json, status: 200
+   end
+ 
+   def show
+       post = Post.find(params[:id])
+       render json: post.to_json, status: 200
+   end
+end
